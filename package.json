@@ -13,6 +13,7 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@fontsource/montserrat": "^4.5.11",
     "axios": "^0.27.2",
     "eslint": "^8.21.0",
     "framer-motion": "^6",

@@ -9,7 +9,7 @@ export const Header = () => {
       justifyContent="space-around"
       p="2rem 0"
     >
-      <Text fontSize="3rem" color="purle1" fontWeight="600">
+      <Text fontSize="2rem" color="purle1" fontWeight="600">
         Frexco
       </Text>
       <Button>Carrinho</Button>
