@@ -6,25 +6,15 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { extendTheme } from '@chakra-ui/react';
-
 import '@fontsource/montserrat';
 
-const theme = extendTheme({
-  colors: {
-    orange: '#e80',
-    purle1: '#87f',
-    purle2: '#76f',
-    white: '#fff',
-  },
-  fonts: {
-    body: 'montserrat',
-  },
-});
+import './styles/styles.css';
+
+import { theme } from './styles/theme';
 
 ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme} resetCSS>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

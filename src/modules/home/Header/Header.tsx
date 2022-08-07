@@ -1,4 +1,6 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
+import { borderBottomEffect } from '../../../components/BorderBottomEffect';
+import { transformScale } from '../../../components/TransformScale';
 
 export const Header = () => {
   return (
@@ -9,10 +11,22 @@ export const Header = () => {
       justifyContent="space-around"
       p="2rem 0"
     >
-      <Text fontSize="2rem" color="purle1" fontWeight="600">
+      <Text fontSize="2rem" color="purle1" fontWeight="600" sx={borderBottomEffect}>
         Frexco
       </Text>
-      <Button>Carrinho</Button>
+      <Button
+        bg="purle1"
+        p="1.5rem 2rem"
+        borderRadius={10}
+        _hover={{
+          backgroundColor: 'purle1',
+        }}
+        sx={transformScale}
+      >
+        <Text color="white" fontSize="1.2rem" fontWeight="bold">
+          Carrinho
+        </Text>
+      </Button>
     </Flex>
   );
 };
