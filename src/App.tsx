@@ -1,7 +1,7 @@
-import { Box } from '@chakra-ui/react';
+import { AppRoutes } from './routes';
 
 function App() {
-  return <Box>app</Box>;
+  return <AppRoutes />;
 }
 
 export default App;
