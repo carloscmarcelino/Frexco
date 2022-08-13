@@ -1,4 +1,5 @@
-import { Box, Button, Center, Flex, Image, Spinner, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { animation } from '../../../components/EnterAnimation/EnterAnimation';
 import { Loading } from '../../../components/Loading/Loading';
 import { transformScale } from '../../../components/TransformScale';
 import { useGetProducts } from '../hooks/useGetProducts';
@@ -42,8 +43,9 @@ export const Dashboard = () => {
                 m="1rem"
                 boxShadow="0 6px 12px rgba(30, 60, 90, 0.2)"
                 bg="white"
-                transition=".2s"
                 sx={transformScale('1.05')}
+                transition=".2s"
+                animation={animation}
               >
                 <Image src={image.src} alt={image.alt} w="380px" h="544px" borderRadius={5} />
 

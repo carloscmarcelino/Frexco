@@ -12,7 +12,7 @@ export const Header = () => {
       p="2rem 0"
       bg="white"
     >
-      <Text fontSize="2rem" color="purle1" fontWeight="600" sx={borderBottomEffect}>
+      <Text fontSize="1.8rem" color="purle1" fontWeight="600" sx={borderBottomEffect}>
         Frexco
       </Text>
       <Button
