@@ -1,8 +1,14 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { borderBottomEffect } from '../../../components/BorderBottomEffect';
 import { transformScale } from '../../../components/TransformScale';
+import { ProductContext } from '../../../context/AppContext';
 
 export const Header = () => {
+  const { setProductContext } = useContext(ProductContext);
+  const navigate = useNavigate();
+
   return (
     <Flex
       as="header"
@@ -12,7 +18,16 @@ export const Header = () => {
       p="2rem 0"
       bg="white"
     >
-      <Text fontSize="1.8rem" color="purple1" fontWeight="600" sx={borderBottomEffect}>
+      <Text
+        fontSize="1.8rem"
+        color="purple1"
+        fontWeight="600"
+        sx={borderBottomEffect}
+        onClick={() => {
+          navigate('/');
+          setProductContext('');
+        }}
+      >
         Frexco
       </Text>
       <Button
