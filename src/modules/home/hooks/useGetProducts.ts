@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getProducts } from '../api';
+import { Products } from '../api/types';
 
 type UseGetProductsType = {
   queryKey?: string;

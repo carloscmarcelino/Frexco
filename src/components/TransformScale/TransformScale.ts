@@ -1,7 +1,8 @@
-export const transformScale = {
-  '&:hover': {
-    cursor: 'pointer',
-    transform: 'scale(1.1)',
-    backgroundColor: '${colors.purle2}',
-  },
+export const transformScale = (scale: string = '1.1') => {
+  return {
+    '&:hover': {
+      transform: `scale(${scale})`,
+      backgroundColor: '${colors.purle2}',
+    },
+  };
 };

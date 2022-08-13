@@ -10,6 +10,7 @@ export const Header = () => {
       alignItems="center"
       justifyContent="space-around"
       p="2rem 0"
+      bg="white"
     >
       <Text fontSize="2rem" color="purle1" fontWeight="600" sx={borderBottomEffect}>
         Frexco
@@ -18,10 +19,17 @@ export const Header = () => {
         bg="purle1"
         p="1.5rem 2rem"
         borderRadius={10}
+        sx={transformScale()}
         _hover={{
           backgroundColor: 'purle1',
+          boxShadow: '',
         }}
-        sx={transformScale}
+        _focus={{
+          outline: 'none',
+        }}
+        _active={{
+          backgroundColor: 'purle1',
+        }}
       >
         <Text color="white" fontSize="1.2rem" fontWeight="bold">
           Carrinho
