@@ -8,7 +8,7 @@ Projeto fictício criado com o intuito de estudar e praticar.
 ## Linguagens utilizadas
 
 Front:
-React
+React <br>
 Typescript
 JavaScript
 
