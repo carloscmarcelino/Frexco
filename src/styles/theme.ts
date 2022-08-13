@@ -5,8 +5,8 @@ import '@fontsource/montserrat';
 export const theme = extendTheme({
   colors: {
     orange: '#e80',
-    purle1: '#87f',
-    purle2: '#76f',
+    purple1: '#87f',
+    purple2: '#76f',
     white: '#fff',
   },
   fonts: {

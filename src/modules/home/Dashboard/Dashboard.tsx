@@ -1,8 +1,10 @@
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import { animation } from '../../../components/EnterAnimation/EnterAnimation';
+import { Box, Flex, useToast } from '@chakra-ui/react';
 import { Loading } from '../../../components/Loading/Loading';
-import { transformScale } from '../../../components/TransformScale';
 import { useGetProducts } from '../hooks/useGetProducts';
+import { Search } from './components';
+import { useForm } from 'react-hook-form';
+import { ProductItem } from './components/ProductItem';
+import { useEffect, useState } from 'react';
 
 type Products = {
   family: string;
@@ -24,61 +26,62 @@ type Products = {
   preco: string;
 };
 
+export type ProductProps = {
+  product: string;
+};
+
 export const Dashboard = () => {
-  const { data, isLoading } = useGetProducts({});
+  const [product, setProduct] = useState<string>('');
+
+  const { register, handleSubmit } = useForm<ProductProps>({
+    defaultValues: { product: '' },
+  });
+
+  const { data, isLoading, isError, status } = useGetProducts({
+    product,
+  });
+
+  const handleSearch = ({ product }: ProductProps) => {
+    const toUpper = product !== '' && product[0].toUpperCase() + product.substr(1);
+    setProduct(toUpper ? toUpper : '');
+  };
+
+  const toast = useToast();
+
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: 'Produto não encontrado.',
+        status: 'error',
+        isClosable: true,
+        duration: 3000,
+      });
+      setProduct('');
+    }
+  }, [isError]);
 
   return (
     <Box minHeight="79.4vh">
+      <Search register={register} handleSubmit={handleSubmit} handleSearch={handleSearch} />
+
       {isLoading && <Loading height="79.4vh" />}
 
-      <Flex alignItems="start" justifyContent="center" wrap="wrap">
+      {!isLoading && !isError && data.data.product && (
+        <Flex alignItems="start" justifyContent="center" mb="2rem">
+          <ProductItem
+            image={data.data.product.image}
+            preco={data.data.product.preco}
+            name={data.data.product.name}
+          />
+        </Flex>
+      )}
+
+      <Flex alignItems="start" justifyContent="center" wrap="wrap" mb="2rem">
         {!isLoading &&
+          !isError &&
+          !data.data.product &&
           data.data.map(({ image, preco, name }: Products, index: number) => {
-            return (
-              <Flex
-                key={index}
-                flexDirection="column"
-                p="1rem"
-                borderRadius={10}
-                m="1rem"
-                boxShadow="0 6px 12px rgba(30, 60, 90, 0.2)"
-                bg="white"
-                sx={transformScale('1.05')}
-                transition=".2s"
-                animation={animation}
-              >
-                <Image src={image.src} alt={image.alt} w="380px" h="544px" borderRadius={5} />
-
-                <Flex direction="column" m="0.5rem 0">
-                  <Text fontWeight="bold" fontSize="1.25rem">
-                    {preco}
-                  </Text>
-
-                  <Text color="orange" fontWeight="bold" fontSize="1.5rem">
-                    {name}
-                  </Text>
-
-                  <Button
-                    alignSelf="start"
-                    bg="purle1"
-                    _hover={{
-                      backgroundColor: 'purle1',
-                      boxShadow: '',
-                    }}
-                    _focus={{
-                      outline: 'none',
-                    }}
-                    _active={{
-                      backgroundColor: 'purle1',
-                    }}
-                  >
-                    <Text color="white" fontWeight="bold" fontSize="1.25rem">
-                      Informações nutricionais
-                    </Text>
-                  </Button>
-                </Flex>
-              </Flex>
-            );
+            return <ProductItem key={index} image={image} preco={preco} name={name} />;
           })}
       </Flex>
     </Box>

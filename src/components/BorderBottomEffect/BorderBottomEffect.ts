@@ -7,7 +7,7 @@ export const borderBottomEffect = {
   '&::after': {
     content: `""`,
     position: 'absolute',
-    backgroundColor: 'purle1',
+    backgroundColor: 'purple1',
     height: '3px',
     width: '0',
     left: '0',
