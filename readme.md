@@ -7,24 +7,24 @@ Projeto fictício criado com o intuito de estudar e praticar.
 
 ## Linguagens utilizadas
 
-Front:
-React <br>
-Typescript
-JavaScript
+Front:<br>
+React<br>
+Typescript<br>
+JavaScript<br>
 
-Back:
+Back:<br>
 Node
 
 ### Bibliotecas:
 
 Front:
-React query & Axios
-React hook form
-React router
-Chakra UI & Styled components
-Eslint & Prettier & Commit lint
+React query & Axios<br>
+React hook form<br>
+React router<br>
+Chakra UI & Styled components<br>
+Eslint & Prettier & Commit lint<br>
 
-Back:
-cors
-express
+Back:<br>
+cors<br>
+express<br>
 nodemon
