@@ -6,7 +6,7 @@ import { transformScale } from '../TransformScale';
 import { ProductContext } from '../../context/AppContext';
 
 export const Header = () => {
-  const { setProductContext } = useContext(ProductContext);
+  const { setProductContext, cart } = useContext(ProductContext);
   const navigate = useNavigate();
 
   return (
@@ -30,6 +30,7 @@ export const Header = () => {
       >
         Frexco
       </Text>
+
       <Button
         bg="purple1"
         p="1.5rem 2rem"
@@ -45,16 +46,17 @@ export const Header = () => {
         _active={{
           backgroundColor: 'purple1',
         }}
+        onClick={() => {
+          navigate('/cart');
+          setProductContext('');
+        }}
       >
-        <Text
-          color="white"
-          fontSize="1.2rem"
-          fontWeight="bold"
-          onClick={() => {
-            navigate('/cart');
-            setProductContext('');
-          }}
-        >
+        {cart.length > 0 && (
+          <Text color="white" fontSize="1.2rem" fontWeight="bold" mr="0.5rem">
+            {cart.length}
+          </Text>
+        )}
+        <Text color="white" fontSize="1.2rem" fontWeight="bold">
           Carrinho
         </Text>
       </Button>

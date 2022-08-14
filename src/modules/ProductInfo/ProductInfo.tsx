@@ -1,4 +1,14 @@
-import { Box, Button, Flex, Image, ListItem, Text, UnorderedList } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  ListItem,
+  Text,
+  Toast,
+  UnorderedList,
+  useToast,
+} from '@chakra-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
@@ -7,7 +17,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { transformScale } from '../../components/TransformScale';
 import { animation } from '../../components/EnterAnimation/EnterAnimation';
 import { Loading } from '../../components/Loading/Loading';
-import { ProductContext } from '../../context/AppContext';
+import { CartOptions, ProductContext } from '../../context/AppContext';
 import { useContext } from 'react';
 
 type Products = {
@@ -48,16 +58,28 @@ export const ProductInfo = () => {
 
   const { cart, setCart } = useContext(ProductContext);
 
+  const toast = useToast();
+
   const addToCart = () => {
-    setCart({
-      ...cart,
-      name: 'teste',
-      preco: 'teste',
-      amount: 0,
+    const hasDuplicate = cart.find((product: CartOptions) => product.name === name);
+
+    if (hasDuplicate) {
+      setCart(
+        cart.map((product: CartOptions) =>
+          product.name === name ? { ...hasDuplicate, amount: hasDuplicate.amount + 1 } : product,
+        ),
+      );
+    } else {
+      setCart([...cart, { name, preco, amount: 1 }]);
+    }
+
+    toast({
+      title: 'Produto adicionado no carrinho com sucesso.',
+      status: 'success',
+      isClosable: true,
+      duration: 1500,
     });
   };
-
-  console.log(cart);
 
   return (
     <>
