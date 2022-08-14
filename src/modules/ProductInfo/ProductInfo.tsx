@@ -5,6 +5,10 @@ import { Header } from '../../components/Header';
 import { useGetProducts } from '../../hooks/useGetProducts';
 import { FaShoppingCart } from 'react-icons/fa';
 import { transformScale } from '../../components/TransformScale';
+import { animation } from '../../components/EnterAnimation/EnterAnimation';
+import { Loading } from '../../components/Loading/Loading';
+import { ProductContext } from '../../context/AppContext';
+import { useContext } from 'react';
 
 type Products = {
   family: string;
@@ -31,19 +35,45 @@ export const ProductInfo = () => {
 
   if (params.id === '') return <Navigate to="/" />;
 
-  const { data, isError } = useGetProducts({ product: params.id ?? '' });
+  const { data, isError, isLoading } = useGetProducts({
+    product: params.id ?? '',
+    config: {
+      retry: false,
+    },
+  });
 
   if (isError) return <Navigate to="/" />;
 
   const { image, name, nutritions, preco }: Products = data ? data.data.product : false;
+
+  const { cart, setCart } = useContext(ProductContext);
+
+  const addToCart = () => {
+    setCart({
+      ...cart,
+      name: 'teste',
+      preco: 'teste',
+      amount: 0,
+    });
+  };
+
+  console.log(cart);
 
   return (
     <>
       <Header />
 
       <Flex minHeight="79.4vh" alignItems="center" justifyContent="center">
+        {isLoading && <Loading />}
+
         {data && (
-          <Flex bg="white" borderRadius={10} boxShadow="0 6px 12px rgba(30, 60, 90, 0.2)" p="1rem">
+          <Flex
+            bg="white"
+            borderRadius={10}
+            boxShadow="0 6px 12px rgba(30, 60, 90, 0.2)"
+            p="1rem"
+            animation={animation}
+          >
             <Image src={image.src} alt={image.alt} w="380px" borderRadius={5} />
 
             <Box w="380px" p="1rem">
@@ -146,6 +176,7 @@ export const ProductInfo = () => {
               </Text>
 
               <Button
+                onClick={() => addToCart()}
                 sx={transformScale('1.05')}
                 bg="purple1"
                 p="1.4rem 2rem"
