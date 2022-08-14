@@ -11,3 +11,5 @@ export const ProductContextProvider = ({ children }) => {
     </ProductContext.Provider>
   );
 };
+
+// const { productContext, setProductContext } = useContext(ProductContext);

@@ -1,9 +1,9 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { borderBottomEffect } from '../../../components/BorderBottomEffect';
-import { transformScale } from '../../../components/TransformScale';
-import { ProductContext } from '../../../context/AppContext';
+import { borderBottomEffect } from '../BorderBottomEffect';
+import { transformScale } from '../TransformScale';
+import { ProductContext } from '../../context/AppContext';
 
 export const Header = () => {
   const { setProductContext } = useContext(ProductContext);
@@ -46,7 +46,15 @@ export const Header = () => {
           backgroundColor: 'purple1',
         }}
       >
-        <Text color="white" fontSize="1.2rem" fontWeight="bold">
+        <Text
+          color="white"
+          fontSize="1.2rem"
+          fontWeight="bold"
+          onClick={() => {
+            navigate('/cart');
+            setProductContext('');
+          }}
+        >
           Carrinho
         </Text>
       </Button>

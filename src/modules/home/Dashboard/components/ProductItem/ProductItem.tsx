@@ -1,4 +1,5 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { animation } from '../../../../../components/EnterAnimation/EnterAnimation';
 import { transformScale } from '../../../../../components/TransformScale';
 
@@ -12,6 +13,8 @@ type ProductItemProps = {
 };
 
 export const ProductItem: React.FC<ProductItemProps> = ({ image, preco, name }) => {
+  const navigate = useNavigate();
+
   return (
     <Flex
       flexDirection="column"
@@ -48,6 +51,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ image, preco, name }) 
           _active={{
             backgroundColor: 'purple1',
           }}
+          onClick={() => navigate(`/${name}`)}
         >
           <Text color="white" fontWeight="bold" fontSize="1.25rem">
             Informações nutricionais

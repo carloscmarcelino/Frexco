@@ -1,11 +1,10 @@
 import { Box, Flex, useToast } from '@chakra-ui/react';
 import { Loading } from '../../../components/Loading/Loading';
-import { useGetProducts } from '../hooks/useGetProducts';
+import { useGetProducts } from '../../../hooks/useGetProducts';
 import { Search } from './components';
 import { useForm } from 'react-hook-form';
 import { ProductItem } from './components/ProductItem';
-import { useContext, useEffect, useState } from 'react';
-import { ProductContext } from '../../../context/AppContext';
+import { useEffect, useState } from 'react';
 
 type Products = {
   family: string;
@@ -32,29 +31,22 @@ export type ProductProps = {
 };
 
 export const Dashboard = () => {
-  const { productContext, setProductContext } = useContext(ProductContext);
-
   const [product, setProduct] = useState<string>('');
 
   const { register, handleSubmit } = useForm<ProductProps>({
     defaultValues: { product: '' },
   });
 
-  const { data, isLoading, isError, status } = useGetProducts({
+  const { data, isLoading, isError } = useGetProducts({
     product,
   });
 
   const handleSearch = ({ product }: ProductProps) => {
     const toUpper = product !== '' && product[0].toUpperCase() + product.substr(1);
     setProduct(toUpper ? toUpper : '');
-    setProductContext(toUpper);
   };
 
   const toast = useToast();
-
-  useEffect(() => {
-    setProduct(productContext);
-  }, [productContext]);
 
   useEffect(() => {
     if (isError) {
