@@ -7,6 +7,7 @@ import {
   Text,
   Toast,
   UnorderedList,
+  useMediaQuery,
   useToast,
 } from '@chakra-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
@@ -64,6 +65,8 @@ export const ProductInfo = () => {
     });
   };
 
+  const [isMobile] = useMediaQuery('(max-width: 1000px)');
+
   return (
     <>
       <Header />
@@ -78,6 +81,8 @@ export const ProductInfo = () => {
             boxShadow="0 6px 12px rgba(30, 60, 90, 0.2)"
             p="1rem"
             animation={animation}
+            direction={isMobile ? 'column' : 'row'}
+            gap={isMobile ? '2rem' : ''}
           >
             <Image src={image.src} alt={image.alt} w="380px" borderRadius={5} />
 
