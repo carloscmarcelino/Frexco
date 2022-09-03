@@ -1,44 +1,80 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useMediaQuery } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { animation } from '../../components/EnterAnimation/EnterAnimation';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import { transformScale } from '../../components/TransformScale';
-import { CartOptions, ProductContext } from '../../context/AppContext';
+import { ProductContext } from '../../context/AppContext';
 
 import { IoMdTrash } from 'react-icons/io';
+import { Product } from '../../types';
+
+type ProductWAmount = {
+  amount: number;
+} & Product;
 
 export const Cart = () => {
-  // const { cart, setCart } = useContext(ProductContext);
+  const { cart, setCart } = useContext(ProductContext);
 
-  const cart = [
-    {
-      amount: 1,
-      name: 'a',
-      preco: 'R$: 1',
-    },
-    {
-      amount: 2,
-      name: 'b',
-      preco: 'R$: 2',
-    },
-  ];
+  const decrement = (product: ProductWAmount): void => {
+    if (product.amount === 0) return;
 
-  const decrement = (): void => {};
+    const hasDuplicate = cart.find(({ id }: Product) => id === product.id);
 
-  const increment = (): void => {};
+    if (hasDuplicate) {
+      setCart(
+        cart.map((cartFind: Product) =>
+          cartFind.id === product.id
+            ? { ...hasDuplicate, amount: hasDuplicate.amount - 1 }
+            : cartFind,
+        ),
+      );
+    } else {
+      setCart([...cart, { ...product, amount: 1 }]);
+    }
+  };
 
-  const removeItem = (): void => {};
+  const increment = (product: ProductWAmount): void => {
+    const hasDuplicate = cart.find(({ id }: Product) => id === product.id);
 
-  const clearCart = (): void => {};
+    if (hasDuplicate) {
+      setCart(
+        cart.map((i: Product) =>
+          i.id === product.id ? { ...hasDuplicate, amount: hasDuplicate.amount + 1 } : i,
+        ),
+      );
+    } else {
+      setCart([...cart, { ...product, amount: 1 }]);
+    }
+  };
+
+  const removeItem = (product: ProductWAmount): void => {
+    const cartRemove = cart.filter(({ name }: Product) => name !== product.name);
+
+    setCart(cartRemove);
+  };
+
+  const clearCart = (): void => {
+    setCart([]);
+  };
 
   const total = (): string => {
-    return 'R$ 1,00';
+    const cartMap = cart.map(({ preco, amount }: { preco: string; amount: number }) => {
+      const priceClean = Number(preco.replace('R$: ', '').replace(',', '.'));
+
+      return priceClean * amount;
+    });
+
+    const calc = cartMap.reduce((acc: number, curr: number) => acc + curr);
+
+    return `R$ ${calc.toFixed(2)}`;
   };
 
-  const products = (): string => {
-    return '1';
+  const products = (): number => {
+    return cart.length;
   };
+
+  const [isMobile] = useMediaQuery('(max-width: 1000px)');
 
   return (
     <>
@@ -60,11 +96,13 @@ export const Cart = () => {
 
           {cart.length > 0 && (
             <>
-              {cart.map(({ amount, name, preco }: CartOptions, index: number) => {
+              {cart.map((item: ProductWAmount, index: number) => {
+                const { amount, name, preco } = item;
+
                 return (
                   <Flex
                     key={index}
-                    mt={index > 0 ? '1rem' : ''}
+                    mt={isMobile ? '2rem' : index > 0 ? '1rem' : ''}
                     boxShadow="0 6px 12px rgba(30, 60, 90, 0.2)"
                     bg="white"
                     w="80%"
@@ -72,6 +110,8 @@ export const Cart = () => {
                     justifyContent="space-around"
                     borderRadius={8}
                     p="20px 50px"
+                    direction={isMobile ? 'column' : 'row'}
+                    gap={isMobile ? '2rem' : ''}
                   >
                     <Flex>
                       <Text fontWeight="bold" mr="0.5rem" fontSize="1.125rem">
@@ -96,7 +136,7 @@ export const Cart = () => {
                         Quantidade:
                       </Text>
                       <Flex
-                        onClick={() => decrement()}
+                        onClick={() => decrement(item)}
                         borderRadius={8}
                         transition=".3s"
                         w="25px"
@@ -108,6 +148,7 @@ export const Cart = () => {
                         alignItems="center"
                         justifyContent="center"
                         mr="0.5rem"
+                        cursor="pointer"
                       >
                         -
                       </Flex>
@@ -115,7 +156,7 @@ export const Cart = () => {
                         {amount}
                       </Text>
                       <Flex
-                        onClick={() => increment()}
+                        onClick={() => increment(item)}
                         borderRadius={8}
                         transition=".3s"
                         w="25px"
@@ -127,17 +168,22 @@ export const Cart = () => {
                         alignItems="center"
                         justifyContent="center"
                         ml="0.5rem"
+                        cursor="pointer"
                       >
                         +
                       </Flex>
                     </Flex>
 
-                    <IoMdTrash fontSize="1.5rem" onClick={() => removeItem()} />
+                    <IoMdTrash
+                      cursor="pointer"
+                      fontSize="1.5rem"
+                      onClick={() => removeItem(item)}
+                    />
                   </Flex>
                 );
               })}
 
-              <Flex flexDirection="column" alignItems="center" mt="2rem" w="60%">
+              <Flex flexDirection="column" alignItems="center" mt="2rem" w="60%" mb="3rem">
                 <Text color="orange" fontWeight="bold" fontSize="1.6rem" mb="1rem">
                   Finalizar
                 </Text>
@@ -150,6 +196,8 @@ export const Cart = () => {
                   justifyContent="space-around"
                   borderRadius={8}
                   p="20px 50px"
+                  direction={isMobile ? 'column' : 'row'}
+                  gap={isMobile ? '2rem' : ''}
                 >
                   <Flex>
                     <Text fontSize="1.125rem" fontWeight="bold" mr="0.5rem">

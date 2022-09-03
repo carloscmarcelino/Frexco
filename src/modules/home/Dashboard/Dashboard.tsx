@@ -6,26 +6,7 @@ import { useForm } from 'react-hook-form';
 import { ProductItem } from './components/ProductItem';
 import { useContext, useEffect, useState } from 'react';
 import { ProductContext } from '../../../context/AppContext';
-
-type Products = {
-  family: string;
-  genus: string;
-  id: number;
-  image: {
-    alt: string;
-    src: string;
-  };
-  name: string;
-  nutritions: {
-    calories: number;
-    carbohydrates: number;
-    fat: number;
-    protein: number;
-    sugar: number;
-  };
-  order: string;
-  preco: string;
-};
+import { Product } from '../../../types';
 
 export type ProductProps = {
   product: string;
@@ -88,7 +69,7 @@ export const Dashboard = () => {
         {!isLoading &&
           !isError &&
           !data.data.product &&
-          data.data.map(({ image, preco, name }: Products, index: number) => {
+          data.data.map(({ image, preco, name }: Product, index: number) => {
             return <ProductItem key={index} image={image} preco={preco} name={name} />;
           })}
       </Flex>

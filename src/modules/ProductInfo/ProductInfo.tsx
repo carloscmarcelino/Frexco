@@ -17,28 +17,9 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { transformScale } from '../../components/TransformScale';
 import { animation } from '../../components/EnterAnimation/EnterAnimation';
 import { Loading } from '../../components/Loading/Loading';
-import { CartOptions, ProductContext } from '../../context/AppContext';
+import { ProductContext } from '../../context/AppContext';
 import { useContext } from 'react';
-
-type Products = {
-  family: string;
-  genus: string;
-  id: number;
-  image: {
-    alt: string;
-    src: string;
-  };
-  name: string;
-  nutritions: {
-    calories: number;
-    carbohydrates: number;
-    fat: number;
-    protein: number;
-    sugar: number;
-  };
-  order: string;
-  preco: string;
-};
+import { Product } from '../../types';
 
 export const ProductInfo = () => {
   const params = useParams();
@@ -54,23 +35,25 @@ export const ProductInfo = () => {
 
   if (isError) return <Navigate to="/" />;
 
-  const { image, name, nutritions, preco }: Products = data ? data.data.product : false;
+  const product: Product = data ? data.data.product : false;
+
+  const { image, name, nutritions, preco, id } = product;
 
   const { cart, setCart } = useContext(ProductContext);
 
   const toast = useToast();
 
   const addToCart = () => {
-    const hasDuplicate = cart.find((product: CartOptions) => product.name === name);
+    const hasDuplicate = cart.find((cartItem: Product) => cartItem.id === product.id);
 
     if (hasDuplicate) {
       setCart(
-        cart.map((product: CartOptions) =>
-          product.name === name ? { ...hasDuplicate, amount: hasDuplicate.amount + 1 } : product,
-        ),
+        cart.map((i: Product) => {
+          return i.id === product.id ? { ...hasDuplicate, amount: hasDuplicate.amount + 1 } : i;
+        }),
       );
     } else {
-      setCart([...cart, { name, preco, amount: 1 }]);
+      setCart([...cart, { ...product, amount: 1 }]);
     }
 
     toast({
