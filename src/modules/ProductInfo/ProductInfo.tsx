@@ -66,6 +66,7 @@ export const ProductInfo = () => {
   };
 
   const [isMobile] = useMediaQuery('(max-width: 1000px)');
+  const [isSmall] = useMediaQuery('(max-width: 500px)');
 
   return (
     <>
@@ -83,10 +84,16 @@ export const ProductInfo = () => {
             animation={animation}
             direction={isMobile ? 'column' : 'row'}
             gap={isMobile ? '2rem' : ''}
+            w="95%"
           >
-            <Image src={image.src} alt={image.alt} w="380px" borderRadius={5} />
+            <Image
+              src={image.src}
+              alt={image.alt}
+              w={isSmall ? '100%' : '380px'}
+              borderRadius={5}
+            />
 
-            <Box w="380px" p="1rem">
+            <Box w={isSmall ? '100%' : '380px'} p="1rem">
               <Text color="orange" fontSize="1.2rem" fontWeight="bold" mb="0.5rem">
                 {name}
               </Text>
