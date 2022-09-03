@@ -84,7 +84,7 @@ export const ProductInfo = () => {
             animation={animation}
             direction={isMobile ? 'column' : 'row'}
             gap={isMobile ? '2rem' : ''}
-            w="95%"
+            w={isSmall ? '95%' : 'auto'}
           >
             <Image
               src={image.src}
