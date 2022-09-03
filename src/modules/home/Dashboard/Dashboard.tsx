@@ -23,6 +23,9 @@ export const Dashboard = () => {
 
   const { data, isLoading, isError } = useGetProducts({
     product,
+    config: {
+      retry: false,
+    },
   });
 
   const handleSearch = ({ product }: ProductProps) => {
