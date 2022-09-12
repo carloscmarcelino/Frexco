@@ -53,7 +53,7 @@ export const Dashboard = () => {
   }, [isError]);
 
   return (
-    <Box minHeight="79.4vh">
+    <Box minHeight="72.5vh">
       <Search register={register} handleSubmit={handleSubmit} handleSearch={handleSearch} />
 
       {isLoading && <Loading height="79.4vh" />}
