@@ -1,12 +1,12 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { borderBottomEffect } from '../BorderBottomEffect';
 import { transformScale } from '../TransformScale';
 import { ProductContext } from '../../context/AppContext';
+import { useProductContext } from '../../context';
 
 export const Header = () => {
-  const { setProductContext, cart } = useContext(ProductContext);
+  const { setProductContext, cart } = useProductContext();
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ export const Header = () => {
         sx={borderBottomEffect}
         onClick={() => {
           navigate('/');
-          setProductContext('');
+          setProductContext?.('');
         }}
       >
         Frexco
@@ -48,12 +48,12 @@ export const Header = () => {
         }}
         onClick={() => {
           navigate('/cart');
-          setProductContext('');
+          setProductContext?.('');
         }}
       >
-        {cart.length > 0 && (
+        {cart && cart?.length > 0 && (
           <Text color="white" fontSize="1.2rem" fontWeight="bold" mr="0.5rem">
-            {cart.length}
+            {cart?.length}
           </Text>
         )}
         <Text color="white" fontSize="1.2rem" fontWeight="bold">

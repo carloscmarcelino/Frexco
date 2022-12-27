@@ -1,11 +1,18 @@
-import { createContext, useState } from 'react';
-import { Product } from '../types';
+import { createContext, useState, Dispatch, SetStateAction } from 'react';
+import { Products } from '../api/mock-products';
 
-export const ProductContext = createContext<any>({});
+export type ProductContext = {
+  productContext?: string;
+  setProductContext?: Dispatch<SetStateAction<string | undefined>>;
+  cart?: Products;
+  setCart?: Dispatch<SetStateAction<Products>>;
+};
+
+export const ProductContext = createContext<ProductContext>({});
 
 export const ProductContextProvider = ({ children }) => {
-  const [productContext, setProductContext] = useState<string | null>(null);
-  const [cart, setCart] = useState<Product[]>([]);
+  const [productContext, setProductContext] = useState<string>();
+  const [cart, setCart] = useState<Products>([]);
 
   return (
     <ProductContext.Provider value={{ productContext, setProductContext, cart, setCart }}>
@@ -13,5 +20,3 @@ export const ProductContextProvider = ({ children }) => {
     </ProductContext.Provider>
   );
 };
-
-// const { productContext, setProductContext } = useContext(ProductContext);

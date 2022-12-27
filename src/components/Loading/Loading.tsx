@@ -1,10 +1,18 @@
 import styled from 'styled-components';
+import { Footer } from '../Footer';
+import { Header } from '../Header';
 
 type LoadingProps = {
   height?: string;
+  hasHeader?: boolean;
+  hasFooter?: boolean;
 };
 
-export const Loading: React.FC<LoadingProps> = ({ height = 'auto' }) => {
+export const Loading: React.FC<LoadingProps> = ({
+  height = 'auto',
+  hasHeader = false,
+  hasFooter = false,
+}) => {
   const Loading = styled.div`
     display: flex;
     align-items: center;
@@ -44,11 +52,17 @@ export const Loading: React.FC<LoadingProps> = ({ height = 'auto' }) => {
   `;
 
   return (
-    <Loading>
-      <Circle></Circle>
-      <Circle></Circle>
-      <Circle></Circle>
-      <Circle></Circle>
-    </Loading>
+    <>
+      {hasHeader && <Header />}
+
+      <Loading>
+        <Circle></Circle>
+        <Circle></Circle>
+        <Circle></Circle>
+        <Circle></Circle>
+      </Loading>
+
+      {hasFooter && <Footer />}
+    </>
   );
 };

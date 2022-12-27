@@ -1,16 +1,10 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { Product } from '../../../../../api/mock-products';
 import { animation } from '../../../../../components/EnterAnimation/EnterAnimation';
 import { transformScale } from '../../../../../components/TransformScale';
 
-type ProductItemProps = {
-  image: {
-    src: string;
-    alt: string;
-  };
-  preco: string;
-  name: string;
-};
+type ProductItemProps = Partial<Product>;
 
 export const ProductItem: React.FC<ProductItemProps> = ({ image, preco, name }) => {
   const navigate = useNavigate();
@@ -27,7 +21,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ image, preco, name }) 
       transition=".2s"
       animation={animation}
     >
-      <Image src={image.src} alt={image.alt} w="380px" h="544px" borderRadius={5} />
+      <Image src={image?.src} alt={image?.alt} w="380px" h="544px" borderRadius={5} />
 
       <Flex direction="column" m="0.5rem 0">
         <Text fontWeight="bold" fontSize="1.25rem">

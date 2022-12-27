@@ -1,1 +1,1 @@
-export * from './BorderBottomEffect';
+export * from './borderBottomEffect';
